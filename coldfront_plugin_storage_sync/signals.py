@@ -1,7 +1,11 @@
 from django.dispatch import receiver
+from django_q.tasks import async_task
 
 from coldfront.core.allocation.signals import (allocation_activate)
 
-@receiver(allocation_activate)
+from coldfront.core.allocation.views import (AllocationCreateView)
+
+@receiver(allocation_activate, sender=AllocationCreateView)
 def activate_allocation(sender, **kwargs):
-    pass
+    allocation_pk = kwargs.get('allocation_pk')
+    async_task('coldfront.plugins.storageSync.tasks.add_storage_allocation',allocation_pk)
