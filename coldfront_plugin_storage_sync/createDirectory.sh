@@ -7,9 +7,13 @@
 # Second argument is the size being allocated in bytes
 PROJECT=$1
 SIZE=$2
+
+# exit if no name give
 if [ -z $PROJECT ]; then
     exit 1
 fi
+
+# exit if no size given
 if [ -z $SIZE ]; then
     exit 2
 fi
@@ -29,3 +33,5 @@ fi
 setfattr -n ceph.quota.max_bytes -v SIZE $PROJECT
 
 df $PROJECT
+
+exit 0
