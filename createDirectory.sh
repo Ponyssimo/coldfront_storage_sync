@@ -29,6 +29,14 @@ if [ ! -d /cephfs/rc/shared/$PROJECT ]; then
     chgrp $PROJECT $PROJECT
     chmod 2770 $PROJECT
     setfacl -R -m default:group:$PROJECT:rwx sharepath
+
+    # making changes in gitlab
+    # need to figure out working directory maybe
+    git pull
+    echo '-fstype=ceph,name=shared_rc,secretfile=/etc/ceph/ceph.shared_rc.secret,nosuid,_netdev,rbytes ceph-mdss.rc.rit.edu:/shared/rc/${PROJECT}' >> auto.shared.rc # this probably isn't right
+    git add auto.shared.rc
+    git commit -m 'added ${PROJECT} to auto.shared.rc'
+    git push
 fi
 setfattr -n ceph.quota.max_bytes -v SIZE $PROJECT
 
