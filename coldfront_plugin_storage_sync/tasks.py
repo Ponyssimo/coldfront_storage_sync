@@ -3,7 +3,7 @@ from coldfront.core.allocation.models import Allocation
 
 def add_storage_allocation(allocation_pk):
     allocation = Allocation.objects.get(pk=allocation_pk)
-    project = allocation.project.title
+    project = allocation.get_attribute("Storage_Group_Name")
     size = allocation.get_attribute("Storage Guota (GB)")
 
     # convert GB to bytes
