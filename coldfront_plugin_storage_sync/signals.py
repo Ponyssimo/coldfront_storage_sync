@@ -9,4 +9,4 @@ from coldfront.core.allocation.views import (AllocationCreateView)
 @receiver(allocation_change_approved)
 def activate_allocation(sender, **kwargs):
     allocation_pk = kwargs.get('allocation_pk')
-    async_task('coldfront.plugins.storageSync.tasks.add_storage_allocation',allocation_pk)
+    async_task('coldfront_plugin_storage_sync.tasks.add_storage_allocation',allocation_pk)

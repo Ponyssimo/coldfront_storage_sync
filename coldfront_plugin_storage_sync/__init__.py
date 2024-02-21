@@ -1,1 +1,1 @@
-default_app_config = "Coldfront_plugin_storage_sync.apps.StorageSyncConfig"
+default_app_config = "coldfront_plugin_storage_sync.apps.StorageSyncConfig"
