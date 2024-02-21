@@ -2,6 +2,8 @@ import logging
 from coldfront.core.allocation.models import Allocation
 
 def add_storage_allocation(allocation_pk):
+    logger.info("test")
+
     allocation = Allocation.objects.get(pk=allocation_pk)
     share = allocation.get_attribute("Storage_Group_Name")
     size = allocation.get_attribute("Storage Guota (GB)")
