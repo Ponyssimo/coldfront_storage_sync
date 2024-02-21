@@ -3,11 +3,11 @@ from coldfront.core.allocation.models import Allocation
 
 def add_storage_allocation(allocation_pk):
     allocation = Allocation.objects.get(pk=allocation_pk)
-    project = allocation.get_attribute("Storage_Group_Name")
+    share = allocation.get_attribute("Storage_Group_Name")
     size = allocation.get_attribute("Storage Guota (GB)")
 
     # convert GB to bytes
-    size = size * 1073741824
+    byteSize = size * 1073741824
 
     #Figure out how to create CLAWS group and modify the autofs file here
 
@@ -19,5 +19,7 @@ def add_storage_allocation(allocation_pk):
         logger.error("Failed adding or changing allocation: no project name found")
     elif status == 2:
         logger.error("Failed adding or changing allocation: no allocation size found")
-
-    logger.info("Successfully added or changed allocation %s with size %d", project, size)
+    elif status == 3:
+        logger.info("%s already has storage quota of %dGB", share, size)
+    else:
+        logger.info("Successfully added or changed allocation %s with size %d", share, size)

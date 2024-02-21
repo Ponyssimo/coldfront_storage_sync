@@ -37,6 +37,11 @@ if [ ! -d /cephfs/rc/shared/$PROJECT ]; then
     git add auto.shared.rc
     git commit -m 'added ${PROJECT} to auto.shared.rc'
     git push
+else
+    CURRENT=${getfattr -n ceph.quota.max_bytes $PROJECT}
+    if [ SIZE == CURRENT ]; then
+        exit 3
+    fi
 fi
 setfattr -n ceph.quota.max_bytes -v SIZE $PROJECT
 
