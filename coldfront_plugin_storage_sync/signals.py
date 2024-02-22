@@ -1,7 +1,7 @@
 from django.dispatch import receiver
 from django_q.tasks import async_task
 
-from coldfront.core.allocation.signals import (allocation_activate)
+from coldfront.core.allocation.signals import (allocation_activate, allocation_change_approved)
 
 from coldfront.core.allocation.views import (AllocationCreateView)
 
