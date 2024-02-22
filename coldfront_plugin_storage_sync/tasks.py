@@ -1,6 +1,8 @@
 import logging
 from coldfront.core.allocation.models import Allocation
 
+logger = logging.getLogger(__name__)
+
 def add_storage_allocation(allocation_pk):
     logger.info("test")
 
