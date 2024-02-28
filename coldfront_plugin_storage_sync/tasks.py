@@ -6,17 +6,20 @@ logger = logging.getLogger(__name__)
 def add_storage_allocation(allocation_pk):
     logger.info("test")
 
-    allocation = Allocation.objects.get(pk=allocation_pk)
-    share = allocation.get_attribute("Storage_Group_Name")
-    size = allocation.get_attribute("Storage Guota (GB)")
+    #allocation = Allocation.objects.get(pk=allocation_pk)
+    #share = allocation.get_attribute("Storage_Group_Name")
+    #size = allocation.get_attribute("Storage Guota (GB)")
 
     # convert GB to bytes
-    byteSize = size * 1073741824
+    #byteSize = size * 1073741824
 
     #Figure out how to create CLAWS group and modify the autofs file here
 
     #run createDirectory and save exit code to status
-    status = NULL
+    status = 0
+
+    share = "test"
+    size = 3
 
     #report error if status !=0
     if status == 1:
