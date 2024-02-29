@@ -4,4 +4,4 @@ class StorageSyncConfig(AppConfig):
     name = 'coldfront_plugin_storage_sync'
 
     def ready(self):
-        from . import signals
+        import coldfront_plugin_storage_sync.signals
