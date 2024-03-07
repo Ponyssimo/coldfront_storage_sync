@@ -26,8 +26,8 @@ if [ ! -d /cephfs/rc/shared/$PROJECT ]; then
 
     # this might have to be changed to include the full path
     # assuming group name matches the project name
-    chgrp $PROJECT $PROJECT
-    chmod 2770 $PROJECT
+    chgrp $PROJECT /cephfs/rc/shared/rc/$PROJECT
+    chmod 2770 /cephfs/rc/shared/rc/$PROJECT
     setfacl -R -m default:group:$PROJECT:rwx sharepath
 
     # making changes in gitlab
@@ -43,7 +43,7 @@ else
         exit 3
     fi
 fi
-setfattr -n ceph.quota.max_bytes -v SIZE $PROJECT
+setfattr -n ceph.quota.max_bytes -v $SIZE /cephfs/rc/shared/rc/$PROJECT
 
 df $PROJECT
 
