@@ -32,11 +32,12 @@ if [ ! -d /cephfs/rc/shared/$PROJECT ]; then
 
     # making changes in gitlab
     # need to figure out working directory maybe
-    git pull
-    echo '-fstype=ceph,name=shared_rc,secretfile=/etc/ceph/ceph.shared_rc.secret,nosuid,_netdev,rbytes ceph-mdss.rc.rit.edu:/shared/rc/${PROJECT}' >> auto.shared.rc # this probably isn't right
-    git add auto.shared.rc
-    git commit -m 'added ${PROJECT} to auto.shared.rc'
-    git push
+    #git pull git@kgcoe-git.rit.edu:research-computing/autofs.git
+    #cd autofs
+    #echo '-fstype=ceph,name=shared_rc,secretfile=/etc/ceph/ceph.shared_rc.secret,nosuid,_netdev,rbytes ceph-mdss.rc.rit.edu:/shared/rc/${PROJECT}' >> auto.shared.rc # this probably isn't right
+    #git add auto.shared.rc
+    #git commit -m 'added ${PROJECT} to auto.shared.rc'
+    #git push
 else
     CURRENT=${getfattr -n ceph.quota.max_bytes $PROJECT}
     if [ SIZE == CURRENT ]; then
@@ -45,6 +46,6 @@ else
 fi
 setfattr -n ceph.quota.max_bytes -v $SIZE /cephfs/rc/shared/rc/$PROJECT
 
-df $PROJECT
+df /cephfs/rc/shared/rc/$PROJECT
 
 exit 0
