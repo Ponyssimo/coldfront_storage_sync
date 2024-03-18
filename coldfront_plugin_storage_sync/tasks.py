@@ -4,9 +4,13 @@ from coldfront.core.allocation.models import Allocation
 logger = logging.getLogger(__name__)
 
 def add_storage_allocation(allocation_pk):
+    logger.info("test")
     allocation = Allocation.objects.get(pk=allocation_pk)
+    logger.info("allocation")
     share = allocation.get_attribute("Storage_Group_Name")
+    logger.info("name: %s", share)
     size = allocation.get_attribute("Storage Guota (GB)")
+    logger.info("size: %d", size)
 
     # convert GB to bytes
     byteSize = size * 1073741824
