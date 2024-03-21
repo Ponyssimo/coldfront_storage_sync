@@ -18,7 +18,9 @@ def add_storage_allocation(allocation_pk):
     except:
         logger.warn("Failed adding or changing allocation: no allocation size found")
         exit
+    logger.info("test1")
     logger.info("size: %i", size)
+    logger.info("test2")
 
     # convert GB to bytes
     byteSize = size * 1073741824
