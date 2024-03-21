@@ -1,5 +1,6 @@
 import logging
 from coldfront.core.allocation.models import Allocation
+import subprocess
 
 logger = logging.getLogger(__name__)
 
@@ -20,6 +21,8 @@ def add_storage_allocation(allocation_pk):
     #Figure out how to create CLAWS group and modify the autofs file here
 
     #run createDirectory and save exit code to status
+    result = subprocess.run(['ssh', 'gung.rc.rit.edu', "whoami"])
+    logger.info(result)
     status = 0
 
     #report error if status !=0
