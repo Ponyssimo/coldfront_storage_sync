@@ -21,14 +21,9 @@ def add_storage_allocation(allocation_pk):
     #Figure out how to create CLAWS group and modify the autofs file here
 
     #run createDirectory and save exit code to status
-    result = subprocess.run(['ssh', 'gung.rc.rit.edu', "whoami"], 
-                            shell=False, 
-                            stdin=stdin, 
-                            stdout=subprocess.PIPE, 
-                            stderr=subprocess.PIPE, 
-                            check=check)
+    result = subprocess.run(['ssh', 'gung.rc.rit.edu', "whoami"], capture_output=True, text=True)
     logger.info("test")
-    logger.info(result)
+    logger.info(result.stdout)
     status = 0
 
     #report error if status !=0
