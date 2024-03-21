@@ -4,23 +4,15 @@ from coldfront.core.allocation.models import Allocation
 logger = logging.getLogger(__name__)
 
 def add_storage_allocation(allocation_pk):
-    logger.info("test")
     allocation = Allocation.objects.get(pk=allocation_pk)
-    logger.info("allocation")
-    try:
-        share = allocation.get_attribute("Storage_Group_Name")
-    except:
+    share = allocation.get_attribute("Storage_Group_Name")
+    if not share:
         logger.warn("Failed adding or changing allocation: no project name found")
         exit
-    logger.info("name: %s", share)
-    try:
-        size = allocation.get_attribute("Storage Quota (GB)")
-    except:
+    size = allocation.get_attribute("Storage Quota (GB)")
+    if not size:
         logger.warn("Failed adding or changing allocation: no allocation size found")
         exit
-    logger.info("test1")
-    logger.info("size: %i", size)
-    logger.info("test2")
 
     # convert GB to bytes
     byteSize = size * 1073741824
@@ -29,9 +21,6 @@ def add_storage_allocation(allocation_pk):
 
     #run createDirectory and save exit code to status
     status = 0
-
-    share = "test"
-    size = 3
 
     #report error if status !=0
     if status == 1:
