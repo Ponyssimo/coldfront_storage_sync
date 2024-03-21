@@ -7,9 +7,17 @@ def add_storage_allocation(allocation_pk):
     logger.info("test")
     allocation = Allocation.objects.get(pk=allocation_pk)
     logger.info("allocation")
-    share = allocation.get_attribute("Storage_Group_Name")
+    try:
+        share = allocation.get_attribute("Storage_Group_Name")
+    except:
+        logger.warn("Failed adding or changing allocation: no project name found")
+        exit
     logger.info("name: %s", share)
-    size = allocation.get_attribute("Storage Guota (GB)")
+    try:
+        size = allocation.get_attribute("Storage Guota (GB)")
+    except:
+        logger.warn("Failed adding or changing allocation: no allocation size found")
+        exit
     logger.info("size: %d", size)
 
     # convert GB to bytes
@@ -25,9 +33,9 @@ def add_storage_allocation(allocation_pk):
 
     #report error if status !=0
     if status == 1:
-        logger.error("Failed adding or changing allocation: no project name found")
+        logger.warn("Failed adding or changing allocation: no project name found")
     elif status == 2:
-        logger.error("Failed adding or changing allocation: no allocation size found")
+        logger.warn("Failed adding or changing allocation: no allocation size found")
     elif status == 3:
         logger.info("%s already has storage quota of %dGB", share, size)
     else:
