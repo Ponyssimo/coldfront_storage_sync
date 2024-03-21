@@ -14,11 +14,11 @@ def add_storage_allocation(allocation_pk):
         exit
     logger.info("name: %s", share)
     try:
-        size = allocation.get_attribute("Storage Guota (GB)")
+        size = allocation.get_attribute("Storage Quota (GB)")
     except:
         logger.warn("Failed adding or changing allocation: no allocation size found")
         exit
-    logger.info("size: %d", size)
+    logger.info("size: %i", size)
 
     # convert GB to bytes
     byteSize = size * 1073741824
