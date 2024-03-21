@@ -7,24 +7,29 @@ logger = logging.getLogger(__name__)
 def add_storage_allocation(allocation_pk):
     allocation = Allocation.objects.get(pk=allocation_pk)
     share = allocation.get_attribute("Storage_Group_Name")
+    data_found = True
     if not share:
-        logger.warn("Failed adding or changing allocation: no project name found")
-        exit
+        logger.warn("No project name found")
+        data_found = False
     size = allocation.get_attribute("Storage Quota (GB)")
     if not size:
-        logger.warn("Failed adding or changing allocation: no allocation size found")
-        exit
+        logger.warn("No allocation size found")
+        data_found = False
+
+    if not data_found:
+        logger.warn("Storage share could not be added/modified")
+        exit()
 
     # convert GB to bytes
     byteSize = size * 1073741824
 
-    #Figure out how to create CLAWS group and modify the autofs file here
+    # LDAP stuff should happen here
 
-    #run createDirectory and save exit code to status
-    result = subprocess.run(['whoami'], capture_output=True, text=True)
-    logger.info(result.test)
-    result = subprocess.run(['ssh', 'gung.rc.rit.edu', "whoami"], capture_output=True, text=True)
-    logger.info("test")
+    # run createDirectory and save exit code to status
+    try:
+        result = subprocess.run(['whoami'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+    except subprocess.CalledProcessError as e:
+        logger.warn(str(e))
     logger.info(result.stdout)
     status = 0
 
