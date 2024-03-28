@@ -6,7 +6,7 @@ logger = logging.getLogger(__name__)
 
 def add_storage_allocation(allocation_pk):
     allocation = Allocation.objects.get(pk=allocation_pk)
-    share = allocation.get_attribute("Storage_Group_Name")
+    share = allocation.project.name
     data_found = True
     if not share:
         logger.warn("No project name found")
@@ -26,12 +26,12 @@ def add_storage_allocation(allocation_pk):
     # LDAP stuff should happen here
 
     # run createDirectory and save exit code to status
-    try:
-        result = subprocess.run(['whoami'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
-    except subprocess.CalledProcessError as e:
-        logger.warn(str(e))
-    logger.info(result.stdout)
-    status = 0
+    # try:
+    #     result = subprocess.run(['whoami'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+    # except subprocess.CalledProcessError as e:
+    #     logger.warn(str(e))
+    # logger.info(result.stdout)
+    # status = 0
 
     #report error if status !=0
     if status == 1:
