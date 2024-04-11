@@ -14,10 +14,15 @@ def is_storage(allocation_pk):
 #add default storage quota when allocation created, but before approved - allocation_new
 @receiver(allocation_new)
 def new_storage(sender, **kwargs):
-    allocation_pk = kwargs.get('allocation_pk')
-    if is_storage(allocation_pk):
-        allocation = Allocation.objects.get(pk=allocation_pk)
-        allocation.set_usage("Storage Quota (GB)", 150)
+    allocation_id = kwargs.get('allocation_pk')
+    allocation_obj = Allocation.objects.get(id=allocation_id)
+    if is_storage(allocation_id):
+        allocation = Allocation.objects.get(pk=allocation_id)
+        sq = AllocationAttributeType.objects.get(name="Storage Quota (GB)")
+        storage_quota = AllocationAttribute.objects.filter(allocation=allocation_id, allocation_attribute_type=sq)
+        if not slurm_acct_name.exists():
+            storage_quota = AllocationAttribute(allocation=allocation_obj, allocation_attribute_type=sq, value=150)
+            storage_quota.save()
 
 @receiver(allocation_activate)
 @receiver(allocation_change_approved)
