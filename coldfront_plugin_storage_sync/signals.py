@@ -19,9 +19,11 @@ def is_storage(allocation_pk):
 #add default storage quota when allocation created, but before approved - allocation_new
 @receiver(allocation_new)
 def new_storage(sender, **kwargs):
+    logger.info("new storage received")
     allocation_id = kwargs.get('allocation_pk')
     allocation_obj = Allocation.objects.get(id=allocation_id)
     if is_storage(allocation_id):
+        logger.info("is storage")
         allocation = Allocation.objects.get(pk=allocation_id)
         sq = AllocationAttributeType.objects.get(name="Storage Quota (GB)")
         storage_quota = AllocationAttribute.objects.filter(allocation=allocation_id, allocation_attribute_type=sq)
