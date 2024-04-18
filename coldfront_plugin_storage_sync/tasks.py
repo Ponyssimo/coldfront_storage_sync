@@ -7,7 +7,9 @@ logger = logging.getLogger(__name__)
 
 def add_storage_allocation(allocation_pk):
     allocation = Allocation.objects.get(pk=allocation_pk)
+    logger.info("getting title")
     share = allocation.project.title
+    logger.info("got title")
     data_found = True
     if not share:
         logger.warn("No project name found")
