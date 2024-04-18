@@ -15,11 +15,13 @@ def add_storage_allocation(allocation_pk):
     if not share:
         logger.warn("No project name found")
         data_found = False
+    logger.info("getting share size")
     size = allocation.get_attribute("Storage Quota (GB)")
     if not size:
         logger.warn("No allocation size found")
         data_found = False
 
+    logger.info("checking data")
     if not data_found:
         logger.warn("Storage share could not be added/modified")
         exit()
