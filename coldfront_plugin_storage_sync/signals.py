@@ -5,6 +5,7 @@ from django_q.tasks import async_task
 from coldfront.core.allocation.signals import allocation_activate, allocation_change_approved, allocation_new
 from coldfront.core.resource.models import Resource, ResourceAttribute, ResourceAttributeType
 from coldfront.core.allocation.models import (Allocation,AllocationAttribute,AllocationAttributeType,AllocationStatusChoice, )
+from coldfront.core.project.models import Project, ProjectAttribute
 
 from coldfront.core.allocation.views import AllocationCreateView
 
@@ -29,7 +30,7 @@ def new_storage(sender, **kwargs):
         storage_quota = AllocationAttribute.objects.filter(allocation=allocation_id, allocation_attribute_type=sq)
         storage_quota = AllocationAttribute(allocation=allocation_obj, allocation_attribute_type=sq, value=DEFAULT_QUOTA)
         storage_quota.save()
-        logger.info("changed storage allocation quota for %s to %d", allocation_obj.get_parent_resource.name, DEFAULT_QUOTA)
+        logger.info("changed storage allocation quota for %s to %d", allocation_obj.project.name, DEFAULT_QUOTA)
 
 @receiver(allocation_activate)
 @receiver(allocation_change_approved)
