@@ -11,7 +11,9 @@ logger = logging.getLogger(__name__)
 DEFAULT_QUOTA = 150
 
 def is_storage(allocation_pk):
+    logger.info("reached is_storage")
     resource = Allocation.objects.get(allocation_pk).get_parent_resource
+    logger.info(resource)
     if resource.name == 'CEPH':
         return True
     return False
