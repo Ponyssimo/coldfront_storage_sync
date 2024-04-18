@@ -6,8 +6,11 @@ import subprocess
 logger = logging.getLogger(__name__)
 
 def add_storage_allocation(allocation_pk):
+    logger.info("getting allocation")
     allocation = Allocation.objects.get(pk=allocation_pk)
+    logger.info("getting project name")
     share = allocation.get_parent_resource.name
+    logger.info("checking info")
     data_found = True
     if not share:
         logger.warn("No project name found")
