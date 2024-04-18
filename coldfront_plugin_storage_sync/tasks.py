@@ -1,5 +1,5 @@
 import logging
-from coldfront.core.allocation.models import Allocation
+from coldfront.core.allocation.models import Allocation, AllocationAttribute
 from coldfront.core.resource.models import Resource, ResourceAttribute
 import subprocess
 
