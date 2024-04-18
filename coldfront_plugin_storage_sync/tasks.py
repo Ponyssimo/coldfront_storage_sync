@@ -1,13 +1,13 @@
 import logging
 from coldfront.core.allocation.models import Allocation, AllocationAttribute
-from coldfront.core.resource.models import Resource, ResourceAttribute
+from coldfront.core.resource.models import Project, ProjectAttribute
 import subprocess
 
 logger = logging.getLogger(__name__)
 
 def add_storage_allocation(allocation_pk):
     allocation = Allocation.objects.get(pk=allocation_pk)
-    share = allocation.get_parent_resource.name
+    share = allocation.project.title
     data_found = True
     if not share:
         logger.warn("No project name found")
