@@ -14,7 +14,7 @@ DEFAULT_QUOTA = 150
 
 def is_storage(allocation_pk):
     logger.info("reached is_storage")
-    resource = Allocation.objects.get(allocation_pk).get_parent_resource
+    resource = Allocation.objects.get(pk=allocation_pk).get_parent_resource
     logger.info("got resource")
     if resource.name == 'CEPH':
         logger.info("is storage")
