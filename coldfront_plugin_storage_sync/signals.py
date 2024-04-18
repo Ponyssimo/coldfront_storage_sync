@@ -30,7 +30,7 @@ def new_storage(sender, **kwargs):
         storage_quota = AllocationAttribute.objects.filter(allocation=allocation_id, allocation_attribute_type=sq)
         storage_quota = AllocationAttribute(allocation=allocation_obj, allocation_attribute_type=sq, value=DEFAULT_QUOTA)
         storage_quota.save()
-        logger.info("changed storage allocation quota for %s to %d", allocation_obj.project.name, DEFAULT_QUOTA)
+        logger.info("changed storage allocation quota for %s to %d", allocation_obj.project.title, DEFAULT_QUOTA)
 
 @receiver(allocation_activate)
 @receiver(allocation_change_approved)
