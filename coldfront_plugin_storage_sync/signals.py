@@ -13,29 +13,23 @@ logger = logging.getLogger(__name__)
 DEFAULT_QUOTA = 150
 
 def is_storage(allocation_pk):
-    logger.info("reached is_storage")
     resource = Allocation.objects.get(pk=allocation_pk).get_parent_resource
-    logger.info("got resource")
     if resource.name == 'CEPH':
-        logger.info("is storage")
         return True
-    logger.info("not storage")
     return False
 
 #add default storage quota when allocation created, but before approved - allocation_new
 @receiver(allocation_new)
 def new_storage(sender, **kwargs):
-    logger.info("new storage received")
     allocation_id = kwargs.get('allocation_pk')
     allocation_obj = Allocation.objects.get(id=allocation_id)
     if is_storage(allocation_id):
-        logger.info("is storage")
         allocation = Allocation.objects.get(pk=allocation_id)
         sq = AllocationAttributeType.objects.get(name="Storage Quota (GB)")
         storage_quota = AllocationAttribute.objects.filter(allocation=allocation_id, allocation_attribute_type=sq)
         storage_quota = AllocationAttribute(allocation=allocation_obj, allocation_attribute_type=sq, value=DEFAULT_QUOTA)
         storage_quota.save()
-        logger.info("changed storage allocation quota for %s to %d", allocation_obj.project.name, DEFAULT_QUOTA)
+        logger.info("changed storage allocation quota for %s to %d", allocation_obj.get_parent_resource.name, DEFAULT_QUOTA)
 
 @receiver(allocation_activate)
 @receiver(allocation_change_approved)
