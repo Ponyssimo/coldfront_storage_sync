@@ -3,7 +3,7 @@ from django.dispatch import receiver
 from django_q.tasks import async_task
 
 from coldfront.core.allocation.signals import allocation_activate, allocation_change_approved, allocation_new
-from coldfront.core.resource.models import ResourceAttribute, ResourceAttributeType
+from coldfront.core.resource.models import Resource, ResourceAttribute, ResourceAttributeType
 from coldfront.core.allocation.models import (Allocation,AllocationAttribute,AllocationAttributeType,AllocationStatusChoice, )
 
 from coldfront.core.allocation.views import AllocationCreateView
