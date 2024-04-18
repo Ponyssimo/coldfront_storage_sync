@@ -15,9 +15,11 @@ DEFAULT_QUOTA = 150
 def is_storage(allocation_pk):
     logger.info("reached is_storage")
     resource = Allocation.objects.get(allocation_pk).get_parent_resource
-    logger.info(resource)
+    logger.info("got resource")
     if resource.name == 'CEPH':
+        logger.info("is storage")
         return True
+    logger.info("not storage")
     return False
 
 #add default storage quota when allocation created, but before approved - allocation_new
