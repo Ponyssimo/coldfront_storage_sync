@@ -1,6 +1,6 @@
 import logging
 from coldfront.core.allocation.models import Allocation, AllocationAttribute
-from coldfront.core.resource.models import Project, ProjectAttribute
+from coldfront.core.project.models import Project, ProjectAttribute
 import subprocess
 
 logger = logging.getLogger(__name__)
