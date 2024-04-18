@@ -37,7 +37,7 @@ def add_storage_allocation(allocation_pk):
     # except subprocess.CalledProcessError as e:
     #     logger.warn(str(e))
     # logger.info(result.stdout)
-    # status = 0
+    status = 0
 
     #report error if status !=0
     if status == 1:
