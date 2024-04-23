@@ -38,3 +38,9 @@ def get_allocation(project):
 def set_usage(allocation, attribute_name, attribute_value):
     allocation.set_usage(attribute_name, attribute_value)
     allocation.save()
+
+def get_storage_allocations():
+    pass
+
+def get_storage_usage(allocation):
+    pass
