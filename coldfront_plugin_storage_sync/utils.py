@@ -6,6 +6,8 @@ from coldfront.core.allocation.models import Allocation, AllocationAttribute, Al
 
 from coldfront.core.resource.models import Resource, ResourceType
 
+logger = logging.getLogger(__name__)
+
 def _run_cmd(cmd):
     try:
         result = subprocess.run(shlex.split(cmd), stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
