@@ -14,6 +14,12 @@ def _run_cmd(cmd):
     except subprocess.CalledProcessError as e:
         logger.warn(str(e))
     return result.stdout
+
+def is_storage(allocation_pk):
+    resource = Allocation.objects.get(pk=allocation_pk).get_parent_resource
+    if resource.name == 'CEPH':
+        return True
+    return False
     
 def get_project(project_name):
     proj = None
