@@ -46,6 +46,13 @@ def set_usage(allocation, attribute_name, attribute_value):
     allocation.save()
 
 def get_storage_allocations():
+    ceph = Resource.objects.get(name="CEPH", resource_type=ResourceType.objects.get(name="Storage"))
+    alloc = None
+    try:
+        alloc = Allocation.objects.filter(resources=ceph)
+    except:
+        logger.warn("Could not find allocation")
+    return alloc
     pass
 
 def get_storage_usage(allocation):

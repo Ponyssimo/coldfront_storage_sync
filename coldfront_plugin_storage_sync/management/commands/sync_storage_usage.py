@@ -10,7 +10,9 @@ from coldfront.core.allocation.models import (
 from coldfront_plugin_storage_sync.utils import (
     get_project,
     get_allocation,
-    set_usage
+    set_usage,
+    get_storage_allocations,
+    get_storage_usage
 )
 
 logger = logging.getLogger(__name__)
@@ -25,6 +27,16 @@ class Command(BaseCommand):
         if options['noop']:
             self.noop = True
             logger.warn("No operations will be committed")
+        allocations = get_storage_allocations()
+        if allocations.count() > 1:
+            for alloc in allocations:
+                #get and set usage
+                usage = get_storage_usage(alloc)
+                set_usage(alloc, "Storage Quota (GB)", usage)
+        else:
+            #get and set usage
+            usage = get_storage_usage(alloc)
+            set_usage(alloc, "Storage Quota (GB)", usage)
 
         #need to get all allocations
         #loop through allocations, set usage based on the actual share
