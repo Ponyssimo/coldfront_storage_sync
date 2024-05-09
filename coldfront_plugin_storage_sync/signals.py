@@ -25,6 +25,7 @@ def new_storage(sender, **kwargs):
         sq = AllocationAttributeType.objects.get(name="Storage Quota (GB)")
         storage_quota = AllocationAttribute.objects.filter(allocation=allocation_id, allocation_attribute_type=sq)
         storage_quota = AllocationAttribute(allocation=allocation_obj, allocation_attribute_type=sq, value=DEFAULT_QUOTA)
+        allocation.set_usage("Storage Quota (GB)", 0) #no idea if this is gonna work how I think it will
         storage_quota.save()
         logger.info("changed storage allocation quota for %s to %d", allocation_obj.project.title, DEFAULT_QUOTA)
 

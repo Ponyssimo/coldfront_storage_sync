@@ -7,6 +7,7 @@ from coldfront.core.allocation.models import Allocation, AllocationAttribute, Al
 from coldfront.core.resource.models import Resource, ResourceType
 
 logger = logging.getLogger(__name__)
+STORAGE_NAME = "CEPH"
 
 def _run_cmd(cmd):
     try:
@@ -17,20 +18,15 @@ def _run_cmd(cmd):
 
 def is_storage(allocation_pk):
     resource = Allocation.objects.get(pk=allocation_pk).get_parent_resource
-    if resource.name == 'CEPH':
+    if resource.name == STORAGE_NAME:
         return True
     return False
     
-def get_project(project_name):
-    proj = None
-    try:
-        proj = Project.objects.filter(title=project_name).get()
-    except:
-        logger.warn("Could not find project")
-    return proj
+def get_storage_allocations():
+    return Allocation.objects.filter(name=STORAGE_NAME)
     
 def get_allocation(project):
-    ceph = Resource.objects.get(name="CEPH", resource_type=ResourceType.objects.get(name="Storage"))
+    ceph = Resource.objects.get(name=STORAGE_NAME, resource_type=ResourceType.objects.get(name="Storage"))
     alloc = None
     try:
         alloc = Allocation.objects.filter(project=project, resources=ceph)
@@ -46,14 +42,13 @@ def set_usage(allocation, attribute_name, attribute_value):
     allocation.save()
 
 def get_storage_allocations():
-    ceph = Resource.objects.get(name="CEPH", resource_type=ResourceType.objects.get(name="Storage"))
+    ceph = Resource.objects.get(name=STORAGE_NAME, resource_type=ResourceType.objects.get(name="Storage"))
     alloc = None
     try:
         alloc = Allocation.objects.filter(resources=ceph)
     except:
         logger.warn("Could not find allocation")
     return alloc
-    pass
 
 def get_storage_usage(allocation):
     pass
