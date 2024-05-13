@@ -51,4 +51,4 @@ def get_storage_allocations():
     return alloc
 
 def get_storage_usage(allocation):
-    return 0
+    return 50
