@@ -1,5 +1,7 @@
 import logging
 
+from django.core.management.base import BaseCommand, CommandError
+
 from coldfront.core.allocation.models import (
     Allocation,
     AllocationAttribute,
