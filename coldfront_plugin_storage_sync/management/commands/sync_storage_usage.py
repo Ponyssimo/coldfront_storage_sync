@@ -10,7 +10,6 @@ from coldfront.core.allocation.models import (
 )
 
 from coldfront_plugin_storage_sync.utils import (
-    _run_cmd,
     get_storage_allocations,
     get_allocation,
     set_usage,
