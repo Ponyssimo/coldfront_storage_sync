@@ -23,9 +23,6 @@ class Command(BaseCommand):
     help = "sync storage usage"
     
     def handle(self, *args, **options):
-        if options['noop']:
-            self.noop = True
-            logger.warn("No operations will be committed")
         allocations = get_storage_allocations()
         for alloc in allocations:
             #get and set usage
