@@ -9,15 +9,11 @@ from coldfront.core.project.models import Project, ProjectAttribute
 
 from coldfront.core.allocation.views import AllocationCreateView
 
+from coldfront_plugin_storage_sync.utils import is_storage
+
 logger = logging.getLogger(__name__)
 
 DEFAULT_QUOTA = 150
-
-def is_storage(allocation_pk):
-    resource = Allocation.objects.get(pk=allocation_pk).get_parent_resource
-    if resource.name == 'CEPH':
-        return True
-    return False
 
 #add default storage quota when allocation created, but before approved - allocation_new
 @receiver(allocation_new)
@@ -29,6 +25,7 @@ def new_storage(sender, **kwargs):
         sq = AllocationAttributeType.objects.get(name="Storage Quota (GB)")
         storage_quota = AllocationAttribute.objects.filter(allocation=allocation_id, allocation_attribute_type=sq)
         storage_quota = AllocationAttribute(allocation=allocation_obj, allocation_attribute_type=sq, value=DEFAULT_QUOTA)
+        allocation.set_usage("Storage Quota (GB)", 0) #no idea if this is gonna work how I think it will
         storage_quota.save()
         logger.info("changed storage allocation quota for %s to %d", allocation_obj.project.title, DEFAULT_QUOTA)
 
