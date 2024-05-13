@@ -9,7 +9,7 @@ from coldfront.core.project.models import Project, ProjectAttribute
 
 from coldfront.core.allocation.views import AllocationCreateView
 
-import coldfront_plugin_storage_sync.utils.is_storage
+from coldfront_plugin_storage_sync.utils import is_storage
 
 logger = logging.getLogger(__name__)
 
