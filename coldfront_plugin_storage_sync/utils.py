@@ -26,8 +26,8 @@ def is_storage(allocation_pk):
     return False
     
 # gets all storage allocations
-def get_storage_allocations():
-    return Allocation.objects.filter(name=STORAGE_NAME)
+# def get_storage_allocations():
+#     return Allocation.objects.filter(name=STORAGE_NAME)
 
 # gets a storage allocation from a specified project
 def get_allocation(project):
