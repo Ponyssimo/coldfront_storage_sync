@@ -1,5 +1,8 @@
 import logging
 
+from coldfront.core.project.models import Project, ProjectAttribute
+from coldfront.core.allocation.models import Allocation, AllocationAttribute
+
 from django.core.management.base import BaseCommand, CommandError
 
 # from coldfront.core.allocation.models import (
@@ -25,4 +28,7 @@ class Command(BaseCommand):
         for alloc in allocations:
             #get and set usage
             usage = get_storage_usage(alloc)
-            set_usage(alloc, "Storage Quota (GB)", usage)
+            if usage >= 0:
+                set_usage(alloc, "Storage Quota (GB)", usage)
+            else:
+                logger.warn("Storage share %s not found", allocation.project.title)

@@ -2,7 +2,7 @@ import logging
 import subprocess
 import shlex
 
-from coldfront.core.project.models import Project
+from coldfront.core.project.models import Project, ProjectAttribute
 from coldfront.core.allocation.models import Allocation, AllocationAttribute, AllocationAttributeType
 
 from coldfront.core.resource.models import Resource, ResourceType
@@ -58,6 +58,12 @@ def get_storage_allocations():
     return alloc
 
 # gets the current usage for a storage allocation
-# currently just returns a test value
+# untested, needs directory creation to work first to test
 def get_storage_usage(allocation):
-    return 50
+    bsize = _run_cmd("df /shared/rc/%s | awk 'END { print $3 }'", allocation.project.title)
+    if bsize.isdigit():
+        bsize = int(bsize)
+        gsize = bsize // (1 * (10 ** 9))
+        return int(gsize)
+    else:
+        return -1
