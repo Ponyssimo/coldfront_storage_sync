@@ -22,9 +22,6 @@ def is_storage(allocation_pk):
         return True
     return False
     
-def get_storage_allocations():
-    return Allocation.objects.filter(name=STORAGE_NAME)
-    
 def get_allocation(project):
     ceph = Resource.objects.get(name=STORAGE_NAME, resource_type=ResourceType.objects.get(name="Storage"))
     alloc = None
