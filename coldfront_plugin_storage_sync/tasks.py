@@ -2,6 +2,7 @@ import logging
 from coldfront.core.allocation.models import Allocation, AllocationAttribute
 from coldfront.core.project.models import Project, ProjectAttribute
 import subprocess
+from ldap3 import Server, Connection, ALL
 
 logger = logging.getLogger(__name__)
 

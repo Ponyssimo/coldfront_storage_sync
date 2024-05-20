@@ -1,2 +1,2 @@
-python-ldap
-coldfront
+ldap3
+coldfront>=1.1.6
