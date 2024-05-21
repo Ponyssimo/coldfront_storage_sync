@@ -31,4 +31,4 @@ class Command(BaseCommand):
             if usage >= 0:
                 set_usage(alloc, "Storage Quota (GB)", usage)
             else:
-                logger.warn("Storage share %s not found", allocation.project.title)
+                logger.warn("Storage share %s not found", alloc.project.title)
