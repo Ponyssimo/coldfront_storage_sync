@@ -60,7 +60,8 @@ def get_storage_allocations():
 # untested, needs directory creation to work first to test
 def get_storage_usage(allocation):
     try:
-        bsize = _run_cmd("df /shared/rc/" + allocation.project.title + " | awk 'END { print $3 }'")
+        ps = _run_cmd("df /shared/rc/" + allocation.project.title)
+        bsize = _run_cmd("awk 'END { print $3 }', stdin=" + ps)
     except:
         return -1
     if bsize.isdigit():
