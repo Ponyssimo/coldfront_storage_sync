@@ -9,11 +9,13 @@ from coldfront.core.project.models import Project, ProjectAttribute
 
 from coldfront.core.allocation.views import AllocationCreateView
 
+from coldfront.core.utils.common import import_from_settings
+
 from coldfront_plugin_storage_sync.utils import is_storage
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_QUOTA = 150
+DEFAULT_QUOTA = import_from_settings("STORAGE_SYNC_DEFAULT_QUOTA")
 
 # add default storage quota and set usage to 0 when allocation created, but before approved
 @receiver(allocation_new)

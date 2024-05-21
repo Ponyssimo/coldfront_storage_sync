@@ -7,8 +7,11 @@ from coldfront.core.allocation.models import Allocation, AllocationAttribute, Al
 
 from coldfront.core.resource.models import Resource, ResourceType
 
+from coldfront.core.utils.common import import_from_settings
+
 logger = logging.getLogger(__name__)
-STORAGE_NAME = "CEPH"
+
+STORAGE_NAME = import_from_settings("STORAGE_SYNC_STORAGE_RESOURCE_NAME")
 
 # runs a given command
 def _run_cmd(cmd):
