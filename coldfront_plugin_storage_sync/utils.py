@@ -59,10 +59,13 @@ def get_storage_allocations():
 # gets the current usage for a storage allocation
 # untested, needs directory creation to work first to test
 def get_storage_usage(allocation):
-    bsize = _run_cmd("df /shared/rc/%s | awk 'END { print $3 }'", allocation.project.title)
+    try:
+        bsize = _run_cmd("df /shared/rc/%s | awk 'END { print $3 }'", allocation.project.title)
+    except:
+        return -1
     if bsize.isdigit():
         bsize = int(bsize)
         gsize = bsize // (1 * (10 ** 9))
         return int(gsize)
     else:
-        return -1
+        return -2
