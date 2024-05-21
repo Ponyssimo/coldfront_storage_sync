@@ -57,16 +57,16 @@ def get_storage_allocations():
     return alloc
 
 # gets the current usage for a storage allocation
-# untested, needs directory creation to work first to test
 def get_storage_usage(allocation):
     try:
-        ps = subprocess.run(df, "/shared/rc/" + allocation.project.title)
-        bsize = subprocess.check_output(awk, "'END { print $3 }'", stdin=ps.stdout)
+        ps = subprocess.Popen(('df', "/shared/rc/" + allocation.project.title), stdout=subprocess.PIPE)
+        bsize = subprocess.check_output(('awk', 'END { print $3 }'), stdin=ps.stdout)
+        ps.wait
     except:
         return -1
-    if bsize.isdigit():
-        bsize = int(bsize)
-        gsize = bsize // (1 * (10 ** 9))
-        return int(gsize)
-    else:
+    try:
+        int(bsize)
+    except:
         return -2
+    gsize = int(bsize) // (1 * (10 ** 9))
+    return int(gsize)
