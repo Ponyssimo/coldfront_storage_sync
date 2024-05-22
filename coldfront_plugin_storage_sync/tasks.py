@@ -41,11 +41,11 @@ def add_storage_allocation(allocation_pk):
 
     # LDAP stuff should happen here
     tls = None
-    if self.LDAP_USE_TLS:
+    if LDAP_USE_TLS:
         tls = Tls(
-            local_private_key_file=self.LDAP_PRIV_KEY_FILE,
-            local_certificate_file=self.LDAP_CERT_FILE,
-            ca_certs_file=self.LDAP_CACERT_FILE,
+            local_private_key_file=LDAP_PRIV_KEY_FILE,
+            local_certificate_file=LDAP_CERT_FILE,
+            ca_certs_file=LDAP_CACERT_FILE,
         )
     server = Server(LDAP_SERVER_URI, use_ssl=LDAP_USE_SSL, connect_timeout=LDAP_CONNECT_TIMEOUT, tls=tls)
     conn_params = {"auto_bind": True}
