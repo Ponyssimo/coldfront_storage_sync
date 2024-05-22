@@ -68,5 +68,5 @@ def get_storage_usage(allocation):
         int(bsize)
     except:
         return -2
-    gsize = int(bsize) // (10 ** 6)
-    return int(gsize)
+    gsize = int(bsize) / 1048576
+    return round(gsize, 2)
