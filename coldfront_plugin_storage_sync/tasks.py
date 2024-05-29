@@ -2,8 +2,8 @@ import logging
 from coldfront.core.allocation.models import Allocation, AllocationAttribute
 from coldfront.core.project.models import Project, ProjectAttribute
 from coldfront.core.utils.common import import_from_settings
-import subprocess
-from ldap3 import Server, Connection, TLS, get_config_parameter, set_config_parameter, SASL
+
+from coldfront_plugin_storage_sync.utils import run_cmd
 
 logger = logging.getLogger(__name__)
 
@@ -27,12 +27,9 @@ def add_storage_allocation(allocation_pk):
     byteSize = size * 1073741824
 
     # run createDirectory and save exit code to status, may also change to running in python depending on how things get done
-    # try:
-    #     result = subprocess.run(['whoami'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
-    # except subprocess.CalledProcessError as e:
-    #     logger.warn(str(e))
-    # logger.info(result.stdout)
-    status = 0
+    result, resulterr, resultcode = run_cmd("/usr/local/sbin/createDirectory.sh")
+    
+    logger.info(result + ', ' + resultcode) # in for testing
 
     #report error if status !=0
     if status == 1:

@@ -14,7 +14,7 @@ def run_cmd(cmd):
         result = subprocess.run(shlex.split(cmd), stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
     except subprocess.CalledProcessError as e:
         logger.warn(str(e))
-    return result.stdout
+    return result.stdout, result.stderr, result.returncode
 
 def is_storage(allocation_pk):
     resource = Allocation.objects.get(pk=allocation_pk).get_parent_resource
