@@ -9,4 +9,9 @@ pip install git+https://github.com/Ponyssimo/coldfront_storage_sync.git
 Add the following to ColdFront's [local settings](https://coldfront.readthedocs.io/en/latest/config/#configuration-files):
 ```
 INSTALLED_APPS += ["coldfront_plugin_storage_sync"]
+STORAGE_SYNC_STORAGE_RESOURCE_NAME = "Storage Resource Name"
+STORAGE_SYNC_DEFAULT_QUOTA = Default Storage Quota (int)
 ```
+
+The Storage Resource Name should match the resource name in Coldfront.
+The Default Storage Quota is measured in GB
