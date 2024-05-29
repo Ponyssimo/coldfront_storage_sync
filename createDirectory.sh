@@ -21,30 +21,30 @@ fi
 # Create new directory if it doesn't exist
 if [ ! -d /cephfs/rc/shared/$PROJECT ]; then
     # assuming the directory name matches the project name
-    mkdir /cephfs/rc/shared/rc/$PROJECT
-    mkdir /cephfs/rc/home/rc/$PROJECT
+    mkdir /cephfs/rcfs/shared/$PROJECT
 
     # this might have to be changed to include the full path
     # assuming group name matches the project name
-    chgrp $PROJECT /cephfs/rc/shared/rc/$PROJECT
-    chmod 2770 /cephfs/rc/shared/rc/$PROJECT
+    chgrp $PROJECT $PROJECT
+    chmod 2770 $PROJECT
     setfacl -R -m default:group:$PROJECT:rwx sharepath
+    setfattr -n ceph.quota.max_bytes -v $SIZE $PROJECT
 
     # making changes in gitlab
     # need to figure out working directory maybe
-    #git pull git@kgcoe-git.rit.edu:research-computing/autofs.git
-    #cd autofs
-    #echo '-fstype=ceph,name=shared_rc,secretfile=/etc/ceph/ceph.shared_rc.secret,nosuid,_netdev,rbytes ceph-mdss.rc.rit.edu:/shared/rc/${PROJECT}' >> auto.shared.rc # this probably isn't right
-    #git add auto.shared.rc
-    #git commit -m 'added ${PROJECT} to auto.shared.rc'
-    #git push
+    git pull git@kgcoe-git.rit.edu:research-computing/autofs.git
+    cd autofs
+    echo '-fstype=ceph,fs=rcfs,name=shared_rc,nosuid,_netdev,rbytes ceph-mdss.rc.rit.edu:/shared/${PROJECT}' >> auto.shared.rc # this probably isn't right
+    git add auto.shared.rc
+    git commit -m 'added ${PROJECT} to auto.shared.rc'
+    git push
 else
     CURRENT=${getfattr -n ceph.quota.max_bytes $PROJECT}
     if [ SIZE == CURRENT ]; then
         exit 3
     fi
+    setfattr -n ceph.quota.max_bytes -v $SIZE $PROJECT
 fi
-setfattr -n ceph.quota.max_bytes -v $SIZE /cephfs/rc/shared/rc/$PROJECT
 
 df /cephfs/rc/shared/rc/$PROJECT
 
