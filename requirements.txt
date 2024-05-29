@@ -1,1 +1,1 @@
-coldfront>=1.1.6
+coldfront
