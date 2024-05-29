@@ -9,7 +9,7 @@ from coldfront.core.resource.models import Resource, ResourceType
 logger = logging.getLogger(__name__)
 STORAGE_NAME = "CEPH"
 
-def _run_cmd(cmd):
+def run_cmd(cmd):
     try:
         result = subprocess.run(shlex.split(cmd), stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
     except subprocess.CalledProcessError as e:
