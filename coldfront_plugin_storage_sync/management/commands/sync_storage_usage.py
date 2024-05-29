@@ -5,13 +5,6 @@ from coldfront.core.allocation.models import Allocation, AllocationAttribute
 
 from django.core.management.base import BaseCommand, CommandError
 
-# from coldfront.core.allocation.models import (
-#     Allocation,
-#     AllocationAttribute,
-#     AllocationAttributeType,
-#     AllocationStatusChoice
-# )
-
 from coldfront_plugin_storage_sync.utils import (
     set_usage,
     get_storage_allocations,
